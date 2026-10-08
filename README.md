@@ -59,6 +59,13 @@ Telegram reply with the English text
 3. A Cloudflare account — set your `workers.dev` subdomain under Workers.
 4. Node.js 18+ and the Cloudflare API token (for `wrangler deploy`).
 
+### Install with an AI Agent (fastest)
+
+Using OpenCode, Codex, Claude Code, or Cursor? Open this repo in your agent,
+copy the prompt from **[PROMPT.md](./PROMPT.md)**, paste it, and provide the
+3 tokens when asked. The agent handles install, deploy, webhook, and
+verification automatically.
+
 ### Deploy in 5 Steps
 
 ```bash
