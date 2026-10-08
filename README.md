@@ -115,6 +115,18 @@ telegram-gemini-voice-to-text-bot/
 - Gemini free tier: **500 requests/day** on `gemini-flash-lite-latest`
 - Telegram message limit **4096 characters** (long transcripts are auto-split)
 
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `/test-gemini` returns **500** right after deploy | Secret propagation delay after `wrangler secret put` | Wait 10 seconds and retry once — it resolves on its own |
+| Bot replies **free Gemini quota is exhausted (429)** | `gemini-flash-lite-latest` free tier (500 requests/day) used up | Wait, then check usage at https://ai.dev/rate-limit |
+| Bot replies **model is busy (503)** | Temporary Gemini overload | Automatic retries already run; ask the user to try again in 10 seconds |
+| `This audio file is too large` | Audio over 15 MB | Send a shorter recording or compress the audio |
+| `This voice message is too long` | Audio over 5 minutes | Split into shorter voice messages |
+| `pending_update_count` keeps growing in `getWebhookInfo` | Worker crashing or webhook pointing at an old deployment | Redeploy, re-run `setWebhook` to the current `.../webhook` URL, verify `/` health endpoint |
+| `The transcription service is not configured yet` | `GEMINI_API_KEY` secret missing | Run `wrangler secret put GEMINI_API_KEY` again |
+
 ## Keywords
 
 telegram bot, telegram voice to text, speech to text, voice transcription, audio transcription, translate voice to english, gemini ai, google gemini api, gemini flash lite, cloudflare workers, serverless telegram bot, wrangler, free telegram bot hosting, ai chatbot, speech recognition, transcription bot
