@@ -44,8 +44,11 @@ npm install
 npx wrangler deploy
 echo "<BOT_TOKEN>" | npx wrangler secret put BOT_TOKEN
 echo "<GEMINI_API_KEY>" | npx wrangler secret put GEMINI_API_KEY
-# Point Telegram at the Worker:
-curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<worker>.<subdomain>.workers.dev/webhook"
+# Optional but recommended: webhook authentication (see README "Webhook security").
+# Generate with: openssl rand -hex 32
+echo "<WEBHOOK_SECRET>" | npx wrangler secret put WEBHOOK_SECRET
+# Point Telegram at the Worker (append &secret_token=<WEBHOOK_SECRET> when set):
+curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<worker>.<subdomain>.workers.dev/webhook&secret_token=<WEBHOOK_SECRET>"
 # Verify (all three must pass):
 curl "https://<worker>.<subdomain>.workers.dev/"
 curl "https://api.telegram.org/bot<BOT_TOKEN>/getWebhookInfo"   # pending_update_count must be 0

@@ -124,8 +124,11 @@ npx wrangler deploy
 echo "<BOT_TOKEN>" | npx wrangler secret put BOT_TOKEN
 echo "<GEMINI_API_KEY>" | npx wrangler secret put GEMINI_API_KEY
 
-# 4. Point Telegram at your Worker
-curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.<subdomain>.workers.dev/webhook"
+# 3b. Optional but recommended: webhook secret (see "Webhook security" below)
+echo "<RANDOM_SECRET>" | npx wrangler secret put WEBHOOK_SECRET
+
+# 4. Point Telegram at your Worker (append &secret_token=<RANDOM_SECRET> if you did 3b)
+curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-worker>.<subdomain>.workers.dev/webhook&secret_token=<RANDOM_SECRET>"
 
 # 5. Verify
 curl "https://api.telegram.org/bot<BOT_TOKEN>/getWebhookInfo"
@@ -160,6 +163,22 @@ telegram-gemini-voice-to-text-bot/
 ├── package.json          # Wrangler devDependency and scripts
 └── .dev.vars.example     # Local secret template (placeholders only)
 ```
+
+## Webhook security (secret_token)
+
+By default Telegram accepts any `setWebhook` URL, which means anyone who knows
+your Worker URL could POST forged updates to `/webhook` and burn your free
+Gemini quota. To prevent that:
+
+1. Pick a random string (32+ characters), e.g. `openssl rand -hex 32`.
+2. Store it as a Worker secret: `echo "<RANDOM_SECRET>" | npx wrangler secret put WEBHOOK_SECRET`.
+3. Register it with Telegram: `setWebhook?url=.../webhook&secret_token=<RANDOM_SECRET>`.
+
+Telegram then sends the secret back in the
+`X-Telegram-Bot-Api-Secret-Token` header on every update, and the Worker
+rejects requests with a missing or wrong header (`401 Unauthorized`).
+The check is skipped only when `WEBHOOK_SECRET` is not configured, so existing
+installs keep working. Rotate the secret anytime by repeating steps 1–3.
 
 ## Limits
 

@@ -12,6 +12,10 @@
  *
  * Secrets (via `npx wrangler secret put`):
  *   BOT_TOKEN, GEMINI_API_KEY
+ *   WEBHOOK_SECRET (optional but recommended: Telegram webhook secret_token.
+ *     When set, POST /webhook requests must carry the matching
+ *     `X-Telegram-Bot-Api-Secret-Token` header or they are rejected with 401.
+ *     Register it via setWebhook: .../setWebhook?url=...&secret_token=...)
  * Var (from wrangler.toml):
  *   GEMINI_MODEL
  */
@@ -39,6 +43,15 @@ export default {
     }
 
     if (url.pathname === "/webhook" && request.method === "POST") {
+      // Optional webhook authentication: when WEBHOOK_SECRET is configured,
+      // only accept updates carrying the matching secret header that Telegram
+      // sends (see setWebhook `secret_token`). Rejects forged POSTs with 401.
+      if (env.WEBHOOK_SECRET) {
+        const got = request.headers.get("x-telegram-bot-api-secret-token") || "";
+        if (!timingSafeEqual(got, env.WEBHOOK_SECRET)) {
+          return new Response("Unauthorized", { status: 401 });
+        }
+      }
       try {
         const update = await request.json();
         ctx.waitUntil(handleUpdate(update, env));
@@ -51,9 +64,14 @@ export default {
     if (url.pathname === "/setWebhook" && request.method === "GET") {
       const webhookUrl = url.searchParams.get("url");
       if (!webhookUrl) return new Response("?url=https://.../webhook required", { status: 400 });
-      const res = await fetch(
-        `https://api.telegram.org/bot${env.BOT_TOKEN}/setWebhook?url=${encodeURIComponent(webhookUrl)}`
-      );
+      // Optional: &secret_token=... registers a webhook secret with Telegram.
+      // Telegram then sends it back as the X-Telegram-Bot-Api-Secret-Token
+      // header on every update; it must match the WEBHOOK_SECRET worker secret.
+      const secretToken = url.searchParams.get("secret_token");
+      const target =
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/setWebhook?url=${encodeURIComponent(webhookUrl)}` +
+        (secretToken ? `&secret_token=${encodeURIComponent(secretToken)}` : "");
+      const res = await fetch(target);
       const data = await res.json();
       return new Response(JSON.stringify(data, null, 2), { headers: { "Content-Type": "application/json" } });
     }
@@ -72,6 +90,17 @@ export default {
     return new Response("Not found", { status: 404 });
   },
 };
+
+/** Constant-time string comparison to avoid leaking the secret via timing. */
+function timingSafeEqual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") return false;
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
 
 async function handleUpdate(update, env) {
   const message = update.message;
