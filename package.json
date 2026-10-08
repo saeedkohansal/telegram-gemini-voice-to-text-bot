@@ -1,5 +1,5 @@
 {
-  "name": "gilgeekify-voice-bot",
+  "name": "telegram-gemini-voice-to-text-bot",
   "version": "1.0.0",
   "private": true,
   "type": "module",

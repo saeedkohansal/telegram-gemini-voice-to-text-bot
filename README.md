@@ -101,7 +101,7 @@ npx wrangler dev
 ## Project Structure
 
 ```text
-gilgeekify-voice-bot/
+telegram-gemini-voice-to-text-bot/
 ├── src/
 │   └── index.js          # Worker: webhook, audio pipeline, Gemini client
 ├── wrangler.toml         # Worker name, nodejs_compat, GEMINI_MODEL var
