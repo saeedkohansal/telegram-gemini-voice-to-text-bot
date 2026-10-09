@@ -15,7 +15,9 @@ Follow these steps exactly:
    (BOT_TOKEN, GEMINI_API_KEY, CLOUDFLARE_API_TOKEN), including the
    how-to-get instructions from AGENTS.md. Do NOT run any install, deploy,
    secret, or webhook command until I have provided all three.
-3. After I provide the tokens: npm install, npx wrangler deploy, store both
+3. After I provide the tokens: npm install, npx wrangler whoami (if it reports
+   an Account API Token, set CLOUDFLARE_ACCOUNT_ID from whoami before
+   deploying), npx wrangler deploy, store both
    secrets with wrangler secret put, set the Telegram webhook to the new
    Worker /webhook URL, and run all three verify steps (Worker health page,
    getWebhookInfo with pending_update_count 0, /test-gemini returning OK —

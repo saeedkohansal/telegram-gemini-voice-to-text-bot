@@ -36,11 +36,20 @@ from another project without confirmation.
    avatar → Manage Account → API Tokens → create a token with Workers deploy
    permission. The user must also have a `workers.dev` subdomain set under
    Workers.
+   Token scope note: a User API Token can list accounts, an Account-scoped
+   API Token cannot. If `wrangler deploy` fails on `/memberships` with
+   `400 code 9106`, the token is Account-scoped — run `npx wrangler whoami`
+   to get the Account ID (also shown on the Workers dashboard sidebar) and
+   set `CLOUDFLARE_ACCOUNT_ID` before deploying.
 
 ## Deploy & verify workflow
 
 ```bash
 npm install
+# Detect token scope first (Account-scoped tokens cannot list accounts):
+npx wrangler whoami
+# If whoami reports an Account API Token, set its Account ID, then deploy:
+# export CLOUDFLARE_ACCOUNT_ID=<account-id-from-whoami>
 npx wrangler deploy
 echo "<BOT_TOKEN>" | npx wrangler secret put BOT_TOKEN
 echo "<GEMINI_API_KEY>" | npx wrangler secret put GEMINI_API_KEY
