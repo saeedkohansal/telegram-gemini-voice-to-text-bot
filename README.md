@@ -109,7 +109,9 @@ Telegram reply with the English text
 1. A Telegram account — create a bot with [@BotFather](https://t.me/BotFather) (`/newbot`) and copy the `BOT_TOKEN`.
 2. A Google account — create a free API key at [Google AI Studio](https://aistudio.google.com/app/apikey) and copy the `GEMINI_API_KEY`.
 3. A Cloudflare account — set your `workers.dev` subdomain under Workers.
-4. Node.js 18+ and the Cloudflare API token (for `wrangler deploy`).
+4. Node.js 18+ and the Cloudflare API token (for `wrangler deploy`). If your token
+   is Account-scoped, also copy your Account ID (Workers dashboard sidebar, or
+   from `npx wrangler whoami`).
 
 ### Deploy in 5 Steps (manual alternative to the AI prompt above)
 
@@ -117,7 +119,10 @@ Telegram reply with the English text
 # 1. Install dependencies
 npm install
 
-# 2. Deploy the Worker
+# 2. Deploy the Worker (detect token scope first)
+npx wrangler whoami
+# If whoami reports an Account API Token, set its Account ID, then deploy:
+# export CLOUDFLARE_ACCOUNT_ID=<account-id-from-whoami>
 npx wrangler deploy
 
 # 3. Store secrets (never commit them)
@@ -190,6 +195,7 @@ installs keep working. Rotate the secret anytime by repeating steps 1–3.
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
+| `wrangler deploy` fails on `/memberships` with **400 code 9106** | Account-scoped API token cannot list accounts | Run `npx wrangler whoami`, set `CLOUDFLARE_ACCOUNT_ID` to the shown Account ID, then deploy again |
 | `/test-gemini` returns **500** right after deploy | Secret propagation delay after `wrangler secret put` | Wait 10 seconds and retry once — it resolves on its own |
 | Bot replies **free Gemini quota is exhausted (429)** | `gemini-flash-lite-latest` free tier (500 requests/day) used up | Wait, then check usage at https://ai.dev/rate-limit |
 | Bot replies **model is busy (503)** | Temporary Gemini overload | Automatic retries already run; ask the user to try again in 10 seconds |
