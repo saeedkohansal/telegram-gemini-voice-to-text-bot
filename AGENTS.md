@@ -20,9 +20,17 @@ transcription. No server, no database, no hosting cost.
 ## STEP 0 — Collect tokens FIRST (mandatory, blocking)
 
 **Do not run any deploy, secret, or webhook command until the user has
-provided all three tokens.** Ask for them in your very first reply, together
-with the how-to-get instructions below. Never invent, guess, or reuse tokens
-from another project without confirmation.
+provided all three tokens.** Ask for the tokens one by one in order, waiting
+for the user's reply each time before asking the next one. Include the
+how-to-get instruction for each token when you ask for it. Confirm receipt
+without echoing the full token, then ask for the next one. Never invent,
+guess, or reuse tokens from another project without confirmation.
+
+Order:
+1. First ask for **`BOT_TOKEN`**, wait for reply, confirm receipt.
+2. Then ask for **`GEMINI_API_KEY`**, wait for reply, confirm receipt.
+3. Finally ask for **`CLOUDFLARE_API_TOKEN`**, wait for reply, confirm receipt.
+Only after all three are received, continue with deploy.
 
 1. **`BOT_TOKEN`** — Telegram bot token.
    How to get: chat with [@BotFather](https://t.me/BotFather) → `/newbot` →

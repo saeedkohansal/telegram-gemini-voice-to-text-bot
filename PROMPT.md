@@ -11,10 +11,12 @@ https://github.com/saeedkohansal/telegram-gemini-voice-to-text-bot
 Follow these steps exactly:
 1. Read AGENTS.md and README.md in this repo and follow them — AGENTS.md
    is the authority if they ever disagree.
-2. STEP 0 is mandatory and blocking: first ask me for the 3 required tokens
-   (BOT_TOKEN, GEMINI_API_KEY, CLOUDFLARE_API_TOKEN), including the
-   how-to-get instructions from AGENTS.md. Do NOT run any install, deploy,
-   secret, or webhook command until I have provided all three.
+2. STEP 0 is mandatory and blocking: ask me for the 3 required tokens
+   one by one in this order — first BOT_TOKEN, then GEMINI_API_KEY,
+   then CLOUDFLARE_API_TOKEN — waiting for my reply each time and
+   including the how-to-get instructions from AGENTS.md for each one.
+   Do NOT run any install, deploy, secret, or webhook command until
+   I have provided all three.
 3. After I provide the tokens: npm install, npx wrangler whoami (if it reports
    an Account API Token, set CLOUDFLARE_ACCOUNT_ID from whoami before
    deploying), npx wrangler deploy, store both
