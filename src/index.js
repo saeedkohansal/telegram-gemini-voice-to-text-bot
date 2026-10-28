@@ -8,7 +8,7 @@
  *   transcription translated into clear English text.
  * - User sends /start, /help, or plain text -> bot replies with English
  *   usage instructions.
- * - Every Telegram reply carries the Gilgeekify watermark.
+ * - Every Telegram reply carries the gilgeekify watermark.
  *
  * Secrets (via `npx wrangler secret put`):
  *   BOT_TOKEN, GEMINI_API_KEY
