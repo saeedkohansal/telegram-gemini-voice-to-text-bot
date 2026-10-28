@@ -1,7 +1,11 @@
 # Telegram Voice-to-Text Bot with Gemini AI on Cloudflare Workers
 
 <p align="center">
-  <img src="assets/YouTube-Thumbnail.png" alt="Telegram Voice-to-Text Bot with Gemini AI on Cloudflare Workers — YouTube thumbnail" width="720">
+  <a href="https://youtu.be/pbeX06SY3a4">
+    <img src="assets/YouTube-Thumbnail.png" alt="Build a Voice-to-Text AI Telegram Bot (Gemini AI + Cloudflare Workers Free) — YouTube thumbnail" width="720">
+  </a>
+  <br>
+  🎥 <a href="https://youtu.be/pbeX06SY3a4"><b>Watch the full video tutorial on YouTube</b></a>
 </p>
 
 [![Serverless](https://img.shields.io/badge/Serverless-Cloudflare_Workers-orange)](https://workers.cloudflare.com/)
@@ -12,6 +16,12 @@
 A **free, serverless Telegram voice-to-text bot** that converts **voice messages in any language into English text** using the **Google Gemini AI API**, running on **Cloudflare Workers** with **zero hosting cost and no database**.
 
 Send a voice message → get an accurate English transcription in seconds. No VPS, no server maintenance, no database setup.
+
+## 🎥 Video Tutorial
+
+**Build a Voice-to-Text AI Telegram Bot (Gemini AI + Cloudflare Workers Free)**
+
+▶️ Watch the full step-by-step tutorial on YouTube: **[youtu.be/pbeX06SY3a4](https://youtu.be/pbeX06SY3a4)**
 
 ## 🚀 One-Click Install with an AI Agent
 
@@ -219,6 +229,7 @@ telegram bot, telegram voice to text, speech to text, voice transcription, audio
 Designed by gilgeekify programming
 
 🎬 YouTube: https://www.youtube.com/@gilgeekify
+📧 Business inquiries: gilgeekify@gmail.com
 
 ## License
 
