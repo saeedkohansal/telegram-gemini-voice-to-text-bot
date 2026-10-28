@@ -1,5 +1,9 @@
 # Telegram Voice-to-Text Bot with Gemini AI on Cloudflare Workers
 
+<p align="center">
+  <img src="assets/YouTube-Thumbnail.png" alt="Telegram Voice-to-Text Bot with Gemini AI on Cloudflare Workers — YouTube thumbnail" width="720">
+</p>
+
 [![Serverless](https://img.shields.io/badge/Serverless-Cloudflare_Workers-orange)](https://workers.cloudflare.com/)
 [![AI](https://img.shields.io/badge/AI-Google_Gemini-blue)](https://aistudio.google.com/)
 [![Telegram](https://img.shields.io/badge/Telegram-Bot_API-229ED9)](https://core.telegram.org/bots/api)
