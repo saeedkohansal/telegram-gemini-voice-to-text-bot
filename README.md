@@ -229,7 +229,7 @@ telegram bot, telegram voice to text, speech to text, voice transcription, audio
 Designed by gilgeekify programming
 
 🎬 YouTube: https://www.youtube.com/@gilgeekify
-\
+
 📧 Business inquiries: gilgeekify@gmail.com
 
 ## License
